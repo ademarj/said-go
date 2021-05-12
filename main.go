@@ -5,7 +5,8 @@ import (
 	"html/template"
 	"net/http"
 
-	"github.com/ademarj/said-go/database/model"
+	"github.com/ademarj/said-go/db/dao"
+	"github.com/ademarj/said-go/db/model"
 	"github.com/gorilla/mux"
 )
 
@@ -26,19 +27,39 @@ func indexPage(response http.ResponseWriter, request *http.Request) {
 	t.Execute(response, nil)
 }
 
-// type SouthObject struct {
-// 	SouthAfricaNumberId string
-// }
-
 func holidaysInfoPage(response http.ResponseWriter, request *http.Request) {
 	redirectPage := root_path
 	saNumberId := request.FormValue(req_said)
-	fmt.Println(saNumberId)
 
 	if saNumberId != " " {
-		p := model.Contact{IdNumber: saNumberId}
+
+		contact, _ := model.CreateContactFrom(saNumberId)
+
+		fmt.Println("--- Create Contact ---")
+		fmt.Println(contact.IdNumber)
+		fmt.Println(contact.DateOfBirthday)
+		fmt.Println(contact.Gender)
+		fmt.Println(contact.SaCitizen)
+		fmt.Println("--- FINISH ---")
+
+		contacts, err := dao.GetAllContacts()
+
+		if err != nil {
+			fmt.Println("Oops! Ocorreu um erro")
+		}
+
+		// for _, contact := range contacts {
+		// 	fmt.Println(contact.IdNumber)
+		// 	fmt.Println(contact.DateOfBirthday)
+		// }
+
+		fmt.Println("--- FROM DATABASE ---")
+		fmt.Print(contacts)
+		fmt.Println("--- FINISH ---")
+
+		//p := model.Contact{IdNumber: saNumberId}
 		t, _ := template.ParseFiles(holiday_page)
-		t.Execute(response, p)
+		t.Execute(response, contact)
 	} else {
 		http.Redirect(response, request, redirectPage, code_320)
 	}

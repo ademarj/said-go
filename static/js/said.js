@@ -58,6 +58,8 @@ setInputFilter(saNumberId, function(value) {return /^-?\d*$/.test(value); });
 
 function checksumDig(southAfricaId){
     let dateOfBirth = southAfricaId.substring(0,6)
+
+    console.log(`invalid date ? ${invalidDate(dateOfBirth)}`)
     let genderCode = southAfricaId.substring(6,7)
     let sssCode = southAfricaId.substring(7,10)
     let citizenshipCode = southAfricaId.substring(10,11)
@@ -65,6 +67,8 @@ function checksumDig(southAfricaId){
     let checksumCode = southAfricaId.substring(12)
 
     if(!(citizenshipCode == SA_CITIZEN || citizenshipCode == PERMANENT_RESIDENT)) return false
+
+    if(invalidDate(dateOfBirth)) return false
 
     // https://www.youtube.com/watch?v=XJ7Z8dAPjxI
     // 12 11 10 9 8 7 6 5 4 3 2 1 0
@@ -102,5 +106,37 @@ function checksumDig(southAfricaId){
         }
     }
 
-    return sum % 10 == 0;
+    return sum % 10 === 0;
+}
+
+function invalidDate(yymmdd){
+    let yy = yymmdd.substring(0,2)
+    let mm = yymmdd.substring(2,4)
+    let dd = yymmdd.substring(4,6)
+
+    let date19yy = new Date(
+        parseInt(`19${yy}`),
+        parseInt(mm)-1,
+        parseInt(dd)
+    )
+    let date20yy = new Date(
+        parseInt(`20${yy}`),
+        parseInt(mm)-1,
+        parseInt(dd)
+    )
+
+
+    let month19yy = (date19yy.getMonth()+1) < 10 ?  `0${date19yy.getMonth()+1}` : `${date19yy.getMonth()+1}`
+    let day19yy = date19yy.getDate() < 10 ? `0${date19yy.getDate()}`: `${date19yy.getDate()}`
+    let full19yyFromDate = `${date19yy.getFullYear()}${month19yy}${day19yy}`
+    let full19yy = `19${yymmdd}`
+    if(full19yyFromDate == full19yy) return false;
+
+    let month20yy = (date20yy.getMonth()+1) < 10 ?  `0${date20yy.getMonth()+1}` : `${date20yy.getMonth()+1}`
+    let day20yy = date20yy.getDate() < 10 ? `0${date20yy.getDate()}`: `${date20yy.getDate()}`
+    let full20yyFromDate = `${date20yy.getFullYear()}${month20yy}${day20yy}`
+    let full20yy = `20${yymmdd}`
+    if(full20yyFromDate == full20yy) return false;
+
+    return true
 }
