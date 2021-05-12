@@ -6,6 +6,7 @@ subButton.disabled=true;
 
 const SA_CITIZEN = 0;
 const PERMANENT_RESIDENT = 1;
+const INVALID_MESSAGE = 'Invalid ID Number'
 
 
 form.addEventListener('submit', (el)=>{
@@ -16,9 +17,13 @@ form.addEventListener('submit', (el)=>{
 
     if(messages.length > 0){
         el.preventDefault();
-        errorElement.innerText = messages.join(', ')
+        setMessageError(messages.join(', '))
     }
 })
+
+function setMessageError(message){
+    errorElement.innerText = message;
+}
 
 function setInputFilter(textbox, inputFilter) {
     ["input", "keydown", "keyup", "mousedown", "mouseup", "select", "contextmenu", "drop"].forEach(function(event) {
@@ -36,8 +41,14 @@ function setInputFilter(textbox, inputFilter) {
 
         if(this.value.length === 13){
             subButton.disabled = !checksumDig(this.value);
+            if(subButton.disabled){
+                setMessageError(INVALID_MESSAGE)
+            }else{
+                setMessageError('')
+            }
         }else{
             subButton.disabled = true;
+            setMessageError('')
         }
       });
     });

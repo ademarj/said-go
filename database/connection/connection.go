@@ -24,4 +24,14 @@ func main() {
 
 	exec(db, "create database if not exists said_db")
 	exec(db, "use said_db")
+	exec(db, "drop table if exists contacts")
+	exec(db, `create table contacts(
+		id_number varchar(13),
+		date_of_birth date NOT NULL,
+		gender varchar(50),
+		sa_citizen boolean,
+		counter int(10),
+		PRIMARY KEY (id_number)
+	)`)
+
 }

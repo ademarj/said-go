@@ -5,6 +5,7 @@ import (
 	"html/template"
 	"net/http"
 
+	"github.com/ademarj/said-go/database/model"
 	"github.com/gorilla/mux"
 )
 
@@ -25,9 +26,9 @@ func indexPage(response http.ResponseWriter, request *http.Request) {
 	t.Execute(response, nil)
 }
 
-type SouthObject struct {
-	SouthAfricaNumberId string
-}
+// type SouthObject struct {
+// 	SouthAfricaNumberId string
+// }
 
 func holidaysInfoPage(response http.ResponseWriter, request *http.Request) {
 	redirectPage := root_path
@@ -35,7 +36,7 @@ func holidaysInfoPage(response http.ResponseWriter, request *http.Request) {
 	fmt.Println(saNumberId)
 
 	if saNumberId != " " {
-		p := SouthObject{SouthAfricaNumberId: saNumberId}
+		p := model.Contact{IdNumber: saNumberId}
 		t, _ := template.ParseFiles(holiday_page)
 		t.Execute(response, p)
 	} else {
