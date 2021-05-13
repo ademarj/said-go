@@ -7,6 +7,8 @@
     <title>South Africa Holidays</title>
 </head>
 <body>
-    <p>{{.IdNumber}}<p>
+    {{range .Holidays}}
+        <p>{{.Name}}<p>
+    {{end}}
 </body>
 </html>

@@ -1,13 +1,16 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"html/template"
+	"io/ioutil"
 	"net/http"
 
 	"github.com/ademarj/said-go/db/dao"
 	"github.com/ademarj/said-go/db/model"
 	"github.com/gorilla/mux"
+	"github.com/tidwall/gjson"
 )
 
 const (
@@ -20,6 +23,7 @@ const (
 	holiday_action = "/holiday"
 	http_port      = ":9000"
 	method_post    = "POST"
+	URL_SERVICE    = "https://calendarific.com/api/v2/holidays?&api_key=468db849dfcf900f0f47eca41cc6abf0bc5f55d2&country=ZA&year=2019"
 )
 
 func indexPage(response http.ResponseWriter, request *http.Request) {
@@ -32,32 +36,52 @@ func holidaysInfoPage(response http.ResponseWriter, request *http.Request) {
 	saNumberId := request.FormValue(req_said)
 
 	if saNumberId != " " {
-
 		contact, _ := model.CreateContactFrom(saNumberId)
-
-		fmt.Println("--- Create Contact ---")
-		fmt.Println(contact.IdNumber)
-		fmt.Println(contact.DateOfBirthday)
-		fmt.Println(contact.Gender)
-		fmt.Println(contact.SaCitizen)
-		fmt.Println("--- FINISH ---")
-
-		contacts, err := dao.GetAllContacts()
-
-		if err != nil {
-			fmt.Println("Oops! Ocorreu um erro")
+		objContact, _ := dao.FindBy(contact.IdNumber)
+		ableToCallout := false
+		if contact.IdNumber == objContact.IdNumber {
+			contact.Counter = contact.Counter + objContact.Counter
+			updated, _ := dao.UpdateContact(contact)
+			if updated {
+				ableToCallout = updated
+			}
+		} else {
+			inserted, _ := dao.SaveNewContact(contact)
+			if inserted {
+				ableToCallout = inserted
+			}
 		}
 
-		// for _, contact := range contacts {
-		// 	fmt.Println(contact.IdNumber)
-		// 	fmt.Println(contact.DateOfBirthday)
-		// }
+		fmt.Printf("ableToCallout %t\n", ableToCallout)
 
-		fmt.Println("--- FROM DATABASE ---")
-		fmt.Print(contacts)
-		fmt.Println("--- FINISH ---")
+		var responseAPI model.ResponseRest
+		resp, err := http.Get(URL_SERVICE)
+		if err != nil {
+			panic(err)
+		}
 
-		//p := model.Contact{IdNumber: saNumberId}
+		responseBody, _ := ioutil.ReadAll(resp.Body)
+		json.Unmarshal(responseBody, &responseAPI)
+
+		if responseAPI.Meta.Code == 200 {
+
+			result := gjson.Get(string(responseBody), "response.holidays")
+			var holidays []model.Holiday
+			result.ForEach(func(key, value gjson.Result) bool {
+				name := gjson.Get(value.String(), "name")
+				holidays = append(holidays, model.Holiday{Name: name.String()})
+				println(name.String())
+				return true // keep iterating
+			})
+
+			rep := model.Response{Holidays: holidays}
+			fmt.Println(holidays)
+
+			t, _ := template.ParseFiles(holiday_page)
+			t.Execute(response, rep)
+			return
+		}
+
 		t, _ := template.ParseFiles(holiday_page)
 		t.Execute(response, contact)
 	} else {
