@@ -5,9 +5,11 @@ type Holiday struct {
 	Name        string `db:"name"`
 	Date        string `db:"date"`
 	Description string `db:"description"`
-	ContactId   string `db:"contact_id_number"`
+	ContactId   string `db:"id_number"`
 }
 
-type Holidays struct {
+type Holidays []Holiday
+
+type HolidaysView struct {
 	Holidays []Holiday
 }

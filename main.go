@@ -79,15 +79,22 @@ func holidaysInfoPage(response http.ResponseWriter, request *http.Request) {
 					Id:          fmt.Sprintf("%x", security.GenerateKey([]string{contact.IdNumber, ":", contact.DateOfBirthday, ":", name.String()})),
 					Name:        name.String(),
 					Description: description.String(),
+					Date:        date.String(),
+					ContactId:   contact.IdNumber,
 				}
 				fmt.Println(holiday)
 				holidays = append(holidays, holiday)
 
 				return true // keep iterating
 			})
+			fmt.Println(" --- Save Holiday --- ")
+			r, err := dao.SaveHoliday(holidays[0])
+			if !r {
+				fmt.Println(err.Error())
+			}
 
 			t, _ := template.ParseFiles(holiday_page)
-			t.Execute(response, model.Holidays{Holidays: holidays})
+			t.Execute(response, model.HolidaysView{Holidays: holidays})
 			return
 		}
 

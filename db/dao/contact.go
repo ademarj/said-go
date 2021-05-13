@@ -1,8 +1,6 @@
 package dao
 
 import (
-	"fmt"
-
 	"github.com/ademarj/said-go/db"
 	"github.com/ademarj/said-go/db/model"
 	_ "github.com/go-sql-driver/mysql"
@@ -14,7 +12,6 @@ func GetAllContacts() ([]model.Contact, error) {
 	rs, erro := con.Query(sql)
 
 	if erro != nil {
-		fmt.Println("Error executing query")
 		return nil, erro
 	}
 
