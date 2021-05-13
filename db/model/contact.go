@@ -1,7 +1,6 @@
 package model
 
 import (
-	"fmt"
 	"strconv"
 	"time"
 
@@ -23,7 +22,6 @@ type Contact struct {
 type Contacts []Contact
 
 func CreateContactFrom(idNumber string) (Contact, error) {
-	fmt.Printf("ID Number %s\n", idNumber)
 	yymmdd := stringUtils.Left(idNumber, 6)
 	gssscaz := stringUtils.Right(idNumber, 7)
 	citizenCode := stringUtils.Left(stringUtils.Right(gssscaz, 3), 1)

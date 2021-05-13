@@ -9,6 +9,8 @@ import (
 
 	"github.com/ademarj/said-go/db/dao"
 	"github.com/ademarj/said-go/db/model"
+	jmodel "github.com/ademarj/said-go/http/json"
+	"github.com/ademarj/said-go/util/security"
 	"github.com/gorilla/mux"
 	"github.com/tidwall/gjson"
 )
@@ -54,7 +56,7 @@ func holidaysInfoPage(response http.ResponseWriter, request *http.Request) {
 
 		fmt.Printf("ableToCallout %t\n", ableToCallout)
 
-		var responseAPI model.ResponseRest
+		var responseAPI jmodel.ResponseRest
 		resp, err := http.Get(URL_SERVICE)
 		if err != nil {
 			panic(err)
@@ -69,16 +71,23 @@ func holidaysInfoPage(response http.ResponseWriter, request *http.Request) {
 			var holidays []model.Holiday
 			result.ForEach(func(key, value gjson.Result) bool {
 				name := gjson.Get(value.String(), "name")
-				holidays = append(holidays, model.Holiday{Name: name.String()})
-				println(name.String())
+				description := gjson.Get(value.String(), "description")
+				date := gjson.Get(value.String(), "date.iso")
+
+				fmt.Println(date.String())
+				holiday := model.Holiday{
+					Id:          fmt.Sprintf("%x", security.GenerateKey([]string{contact.IdNumber, ":", contact.DateOfBirthday, ":", name.String()})),
+					Name:        name.String(),
+					Description: description.String(),
+				}
+				fmt.Println(holiday)
+				holidays = append(holidays, holiday)
+
 				return true // keep iterating
 			})
 
-			rep := model.Response{Holidays: holidays}
-			fmt.Println(holidays)
-
 			t, _ := template.ParseFiles(holiday_page)
-			t.Execute(response, rep)
+			t.Execute(response, model.Holidays{Holidays: holidays})
 			return
 		}
 
