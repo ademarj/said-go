@@ -1,13 +1,5 @@
 package model
 
-import (
-	"github.com/ademarj/said-go/util/said"
-)
-
-const (
-	ONE = 1
-)
-
 type Contact struct {
 	IdNumber        string `db:"id_number"`
 	DateOfBirthday  string `db:"date_of_birth"`
@@ -19,18 +11,3 @@ type Contact struct {
 }
 
 type Contacts []Contact
-
-func CreateContactFrom(numberId string) (Contact, error) {
-
-	contact := Contact{
-		IdNumber:        numberId,
-		Gender:          said.Gender(numberId),
-		SaCitizen:       said.SouthAfricanCitizen(numberId),
-		DateOfBirthday:  said.Birthday(numberId),
-		Counter:         ONE,
-		DayOfBirthday:   said.Day(numberId),
-		MonthOfBirthday: said.Month(numberId),
-	}
-
-	return contact, nil
-}

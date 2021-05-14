@@ -8,7 +8,7 @@ import (
 
 	"github.com/ademarj/said-go/helper"
 	jmodel "github.com/ademarj/said-go/http/json"
-	"github.com/ademarj/said-go/util/said"
+	"github.com/ademarj/said-go/said"
 	"github.com/tidwall/gjson"
 )
 
@@ -18,6 +18,7 @@ const (
 
 func Calendarific(numberId string) (success bool, jsonResult gjson.Result) {
 	reqURL := fmt.Sprintf("%s&year=%d&month=%d&day=%d", URL_SERVICE, helper.CurrentYear(), said.Month(numberId), said.Day(numberId))
+	//reqURL := fmt.Sprintf("%s&year=%d", URL_SERVICE, helper.CurrentYear())
 
 	fmt.Println(reqURL)
 

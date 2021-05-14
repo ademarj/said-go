@@ -7,6 +7,7 @@ import (
 	"github.com/ademarj/said-go/controller"
 	"github.com/ademarj/said-go/db/dao"
 	"github.com/ademarj/said-go/db/model"
+	"github.com/ademarj/said-go/said"
 	"github.com/gorilla/mux"
 )
 
@@ -31,11 +32,13 @@ func holidaysInfoPage(response http.ResponseWriter, request *http.Request) {
 	redirectPage := root_path
 	saNumberId := request.FormValue(req_said)
 
-	if saNumberId != " " {
-		contact, _ := model.CreateContactFrom(saNumberId)
-		objContact, _ := dao.FindBy(contact.IdNumber)
-		if contact.IdNumber == objContact.IdNumber {
-			contact.Counter = contact.Counter + objContact.Counter
+	contact, success := said.CreateContactFrom(saNumberId)
+
+	if success {
+		contactFromDB, _ := dao.FindBy(contact.IdNumber)
+
+		if contact.IdNumber == contactFromDB.IdNumber {
+			contact.Counter = contact.Counter + contactFromDB.Counter
 			dao.UpdateContact(contact)
 		} else {
 			dao.SaveNewContact(contact)
@@ -43,15 +46,12 @@ func holidaysInfoPage(response http.ResponseWriter, request *http.Request) {
 
 		holidays := controller.SearchHolidays(contact)
 
-		//holidays, _ := dao.GetHolidaysFrom(contact.IdNumber)
-
 		t, _ := template.ParseFiles(holiday_page)
 		t.Execute(response, model.HolidaysView{Holidays: holidays})
 		return
-
-	} else {
-		http.Redirect(response, request, redirectPage, code_320)
 	}
+
+	http.Redirect(response, request, redirectPage, code_320)
 }
 
 var router = InitRouter()
