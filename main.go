@@ -1,18 +1,14 @@
 package main
 
 import (
-	"encoding/json"
 	"fmt"
 	"html/template"
-	"io/ioutil"
 	"net/http"
 
+	"github.com/ademarj/said-go/controller"
 	"github.com/ademarj/said-go/db/dao"
 	"github.com/ademarj/said-go/db/model"
-	jmodel "github.com/ademarj/said-go/http/json"
-	"github.com/ademarj/said-go/util/security"
 	"github.com/gorilla/mux"
-	"github.com/tidwall/gjson"
 )
 
 const (
@@ -25,7 +21,6 @@ const (
 	holiday_action = "/holiday"
 	http_port      = ":9000"
 	method_post    = "POST"
-	URL_SERVICE    = "https://calendarific.com/api/v2/holidays?&api_key=468db849dfcf900f0f47eca41cc6abf0bc5f55d2&country=ZA&year=2019"
 )
 
 func indexPage(response http.ResponseWriter, request *http.Request) {
@@ -56,50 +51,12 @@ func holidaysInfoPage(response http.ResponseWriter, request *http.Request) {
 
 		fmt.Printf("ableToCallout %t\n", ableToCallout)
 
-		var responseAPI jmodel.ResponseRest
-		resp, err := http.Get(URL_SERVICE)
-		if err != nil {
-			panic(err)
-		}
-
-		responseBody, _ := ioutil.ReadAll(resp.Body)
-		json.Unmarshal(responseBody, &responseAPI)
-
-		if responseAPI.Meta.Code == 200 {
-
-			result := gjson.Get(string(responseBody), "response.holidays")
-			var holidays []model.Holiday
-			result.ForEach(func(key, value gjson.Result) bool {
-				name := gjson.Get(value.String(), "name")
-				description := gjson.Get(value.String(), "description")
-				date := gjson.Get(value.String(), "date.iso")
-
-				fmt.Println(date.String())
-				holiday := model.Holiday{
-					Id:          fmt.Sprintf("%x", security.GenerateKey([]string{contact.IdNumber, ":", contact.DateOfBirthday, ":", name.String()})),
-					Name:        name.String(),
-					Description: description.String(),
-					Date:        date.String(),
-					ContactId:   contact.IdNumber,
-				}
-				fmt.Println(holiday)
-				holidays = append(holidays, holiday)
-
-				return true // keep iterating
-			})
-			fmt.Println(" --- Save Holiday --- ")
-			r, err := dao.SaveHoliday(holidays[0])
-			if !r {
-				fmt.Println(err.Error())
-			}
-
-			t, _ := template.ParseFiles(holiday_page)
-			t.Execute(response, model.HolidaysView{Holidays: holidays})
-			return
-		}
+		holidays := controller.SearchHolidays(contact)
 
 		t, _ := template.ParseFiles(holiday_page)
-		t.Execute(response, contact)
+		t.Execute(response, model.HolidaysView{Holidays: holidays})
+		return
+
 	} else {
 		http.Redirect(response, request, redirectPage, code_320)
 	}
