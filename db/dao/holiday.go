@@ -14,7 +14,7 @@ func GetHolidaysFrom(contactId string) ([]model.Holiday, error) {
 	rs, erro := con.Query(sql, contactId)
 
 	if erro != nil {
-		return nil, erro
+		return []model.Holiday{}, erro
 	}
 
 	var holidays model.Holidays
@@ -23,7 +23,7 @@ func GetHolidaysFrom(contactId string) ([]model.Holiday, error) {
 		erro := rs.Scan(&holiday.Id, &holiday.Name, &holiday.Date, &holiday.Description, &holiday.ContactId)
 
 		if erro != nil {
-			return nil, erro
+			return []model.Holiday{}, erro
 		}
 
 		holidays = append(holidays, holiday)

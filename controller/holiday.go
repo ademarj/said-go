@@ -14,7 +14,7 @@ func SearchHolidays(contact model.Contact) model.Holidays {
 	success, result := api.Calendarific(contact.IdNumber)
 
 	if success {
-		var holidays []model.Holiday
+		var holidaysFromApi []model.Holiday
 		result.ForEach(func(key, value gjson.Result) bool {
 			name := gjson.Get(value.String(), "name")
 			description := gjson.Get(value.String(), "description")
@@ -28,15 +28,42 @@ func SearchHolidays(contact model.Contact) model.Holidays {
 				ContactId:   contact.IdNumber,
 			}
 
-			holidays = append(holidays, holiday)
+			holidaysFromApi = append(holidaysFromApi, holiday)
 
 			return true // keep iterating
 		})
 
-		dao.SaveHoliday(holidays)
+		holidaysFromContact, _ := dao.GetHolidaysFrom(contact.IdNumber)
 
-		return holidays
+		filtered := filter(holidaysFromContact, holidaysFromApi)
+
+		dao.SaveHoliday(filtered)
+
+		return append(filtered, holidaysFromContact...)
 	}
 
+	return model.Holidays{}
+}
+
+func filter(holidaysFromContact model.Holidays, holidaysFromApi model.Holidays) model.Holidays {
+	if len(holidaysFromApi) > 0 {
+		if len(holidaysFromContact) > 0 {
+			var filtered model.Holidays
+			for _, fromService := range holidaysFromApi {
+				contains := false
+				for _, holiday := range holidaysFromContact {
+					if fromService.Id == holiday.Id {
+						contains = true
+						break
+					}
+				}
+				if !contains {
+					filtered = append(filtered, fromService)
+				}
+			}
+			return filtered
+		}
+		return holidaysFromApi
+	}
 	return model.Holidays{}
 }

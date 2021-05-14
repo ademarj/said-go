@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"html/template"
 	"net/http"
 
@@ -35,23 +34,16 @@ func holidaysInfoPage(response http.ResponseWriter, request *http.Request) {
 	if saNumberId != " " {
 		contact, _ := model.CreateContactFrom(saNumberId)
 		objContact, _ := dao.FindBy(contact.IdNumber)
-		ableToCallout := false
 		if contact.IdNumber == objContact.IdNumber {
 			contact.Counter = contact.Counter + objContact.Counter
-			updated, _ := dao.UpdateContact(contact)
-			if updated {
-				ableToCallout = updated
-			}
+			dao.UpdateContact(contact)
 		} else {
-			inserted, _ := dao.SaveNewContact(contact)
-			if inserted {
-				ableToCallout = inserted
-			}
+			dao.SaveNewContact(contact)
 		}
 
-		fmt.Printf("ableToCallout %t\n", ableToCallout)
-
 		holidays := controller.SearchHolidays(contact)
+
+		//holidays, _ := dao.GetHolidaysFrom(contact.IdNumber)
 
 		t, _ := template.ParseFiles(holiday_page)
 		t.Execute(response, model.HolidaysView{Holidays: holidays})
