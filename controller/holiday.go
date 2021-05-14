@@ -20,7 +20,6 @@ func SearchHolidays(contact model.Contact) model.Holidays {
 			description := gjson.Get(value.String(), "description")
 			date := gjson.Get(value.String(), "date.iso")
 
-			fmt.Println(date.String())
 			holiday := model.Holiday{
 				Id:          fmt.Sprintf("%x", security.GenerateKey([]string{contact.IdNumber, ":", contact.DateOfBirthday, ":", name.String()})),
 				Name:        name.String(),
@@ -28,18 +27,13 @@ func SearchHolidays(contact model.Contact) model.Holidays {
 				Date:        date.String(),
 				ContactId:   contact.IdNumber,
 			}
-			fmt.Println(holiday)
+
 			holidays = append(holidays, holiday)
 
 			return true // keep iterating
 		})
 
-		if len(holidays) > 0 {
-			r, err := dao.SaveHoliday(holidays[0])
-			if !r {
-				fmt.Println(err.Error())
-			}
-		}
+		dao.SaveHoliday(holidays)
 
 		return holidays
 	}

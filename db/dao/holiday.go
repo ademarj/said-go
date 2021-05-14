@@ -1,7 +1,7 @@
 package dao
 
 import (
-	"fmt"
+	"log"
 
 	"github.com/ademarj/said-go/db"
 	"github.com/ademarj/said-go/db/model"
@@ -35,29 +35,32 @@ func GetHolidaysFrom(contactId string) ([]model.Holiday, error) {
 	return holidays, nil
 }
 
-func SaveHoliday(holiday model.Holiday) (bool, error) {
-	con := db.Connect()
-	sql := "insert into holiday (id, name, date, description, id_number) values (?, ?, ?, ?, ?)"
-	stmt, erro := con.Prepare(sql)
+func SaveHoliday(holidays []model.Holiday) {
+	if len(holidays) > 0 {
+		sql := "insert into holiday (id, name, date, description, id_number) values (?, ?, ?, ?, ?)"
+		con := db.Connect()
+		defer con.Close()
 
-	if erro != nil {
-		return false, erro
+		stmts := []*db.PipelineStmt{}
+		for _, holiday := range holidays {
+			stmts = append(stmts, db.NewPipelineStmt(sql, holiday.Id, holiday.Name, holiday.Date, holiday.Description, holiday.ContactId))
+		}
+
+		err := db.WithTransaction(con, func(tx db.Transaction) error {
+			_, err := db.RunPipeline(tx, stmts...)
+			return err
+		})
+
+		handleError(err)
+		log.Println("Done.")
+		return
 	}
 
-	fmt.Printf("\nHoliday Id   %s\n", holiday.Id)
-	fmt.Printf("\nHoliday Name %s\n", holiday.Name)
-	fmt.Printf("\nHoliday Date %s\n", holiday.Date)
-	fmt.Printf("\nDescription  %s\n", holiday.Description)
-	fmt.Printf("\nContactId    %s\n", holiday.ContactId)
+	log.Println("No Holiday to save.")
+}
 
-	_, erro = stmt.Exec(holiday.Id, holiday.Name, holiday.Date, holiday.Description, holiday.ContactId)
-
-	if erro != nil {
-		return false, erro
+func handleError(err error) {
+	if err != nil {
+		log.Fatal(err)
 	}
-
-	defer stmt.Close()
-	defer con.Close()
-
-	return true, nil
 }
