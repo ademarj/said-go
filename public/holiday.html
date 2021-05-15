@@ -9,11 +9,13 @@
     <link rel="stylesheet" href="static/css/normalize.css">
     <link rel="stylesheet" href="static/css/reset.css">
     <link rel="stylesheet" href="static/css/said-app.css">
-    <link rel="stylesheet" href="static/css/said-card-search.css">
+    <link rel="stylesheet" href="static/css/search.css">
     <link rel="stylesheet" href="static/css/holidays.css">
 </head>
-<body>
-    <div class="flexbox-container">
+<body class="said-app">
+    <div class="said-header"></div>
+    <div class="said-container">
+
         <div class="said-container-item">
             <div class="said-card-search">
                 <form id="form" method="post" autocomplete="off" action="/holiday">
@@ -24,31 +26,18 @@
                 </form>
             </div>
         </div>
-        <div class="said-container-item">
+        <section class="holidays">
             {{ $length := len .Holidays }} {{ if gt $length 0 }}
-            <table>
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Description</th>
-                        <th>Date</th>
-                        <th>Contact Id</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {{range .Holidays}}
-                        <tr>
-                            <td>{{.Name}}</td>
-                            <td>{{.Description}}</td>
-                            <td>{{.Date}}</td>
-                            <td>{{.ContactId}}</td>
-                        </tr>
-                    {{end}}
-                </tbody>
-            </table>
+            
+                {{range .Holidays}}
+                    <div class="holidays__main-1 box" >
+                        <h3 class="said_card_info">{{ .Name}}</h3>
+                    </div>
+                {{end}}
             {{end}}
-        </div>
+        </section>
     
     </div>
+    <div class="said-footer"></div>
 </body>
 </html>
