@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="static/css/said-app.css">
     <link rel="stylesheet" href="static/css/search.css">
     <link rel="stylesheet" href="static/css/holidays.css">
+    <link rel="stylesheet" href="static/css/calendar.css">
 </head>
 <body class="said-app">
     <div class="said-header"></div>
@@ -28,11 +29,69 @@
         </div>
         <section class="holidays">
             {{ $length := len .Holidays }} {{ if gt $length 0 }}
-            
+
                 {{range .Holidays}}
-                    <div class="holidays__main-1 box" >
+
+                    <div class="holidays__main-1 box">
                         <h3 class="said_card_info">{{ .Name}}</h3>
+                        <div class="calendar">
+                            <div class="month">      
+                                <ul>
+                                  <li class="prev">&#10094;</li>
+                                  <li class="next">&#10095;</li>
+                                  <li>
+                                    August<br>
+                                    <span style="font-size:18px">2021</span>
+                                  </li>
+                                </ul>
+                              </div>
+                              
+                              <ul class="weekdays">
+                                <li>Mo</li>
+                                <li>Tu</li>
+                                <li>We</li>
+                                <li>Th</li>
+                                <li>Fr</li>
+                                <li>Sa</li>
+                                <li>Su</li>
+                              </ul>
+                              
+                              <ul class="days">  
+                                <li>1</li>
+                                <li>2</li>
+                                <li>3</li>
+                                <li>4</li>
+                                <li>5</li>
+                                <li>6</li>
+                                <li>7</li>
+                                <li>8</li>
+                                <li>9</li>
+                                <li><span class="active">10</span></li>
+                                <li>11</li>
+                                <li>12</li>
+                                <li>13</li>
+                                <li>14</li>
+                                <li>15</li>
+                                <li>16</li>
+                                <li>17</li>
+                                <li>18</li>
+                                <li>19</li>
+                                <li>20</li>
+                                <li>21</li>
+                                <li>22</li>
+                                <li>23</li>
+                                <li>24</li>
+                                <li>25</li>
+                                <li>26</li>
+                                <li>27</li>
+                                <li>28</li>
+                                <li>29</li>
+                                <li>30</li>
+                                <li>31</li>
+                              </ul>
+                        </div>
                     </div>
+
                 {{end}}
             {{end}}
         </section>
@@ -41,3 +100,21 @@
     <div class="said-footer"></div>
 </body>
 </html>
+
+
+<!--
+    {{ $firstRow := 1 }}
+
+
+    {{$row := .GridRow}} {{ if eq $row $firstRow}} 
+                    
+        <div class="holidays__main-1 box">
+            <h3 class="said_card_info">{{ .Name}}</h3>
+        </div>
+
+    {{else}}
+        <div class="holidays__main-1 box">
+            <h3 class="said_card_info">{{ .ContactId}}</h3>
+        </div>
+    {{end}}
+-->

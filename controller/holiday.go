@@ -39,27 +39,27 @@ func SearchHolidays(contact model.Contact) model.Holidays {
 
 		dao.SaveHoliday(filtered)
 
-		return append(filtered, holidaysFromContact...)
+		//return append(filtered, holidaysFromContact...)
 
-		// holidaysMerged := append(filtered, holidaysFromContact...)
-		// if len(holidaysMerged) <= 0 {
-		// 	return model.Holidays{}
-		// }
+		holidaysMerged := append(filtered, holidaysFromContact...)
+		if len(holidaysMerged) <= 0 {
+			return model.Holidays{}
+		}
 
-		// var holidays []model.Holiday
-		// columnGrid := 0
-		// rowGrid := 1
-		// for _, h := range holidaysMerged {
-		// 	columnGrid += 1
-		// 	h.GridColumn = columnGrid
-		// 	h.GridRow = rowGrid
-		// 	holidays = append(holidays, h)
-		// 	if columnGrid == 4 {
-		// 		columnGrid = 0
-		// 		rowGrid += 1
-		// 	}
-		// }
-		// return holidays
+		var holidays []model.Holiday
+		columnGrid := 0
+		rowGrid := 1
+		for _, h := range holidaysMerged {
+			columnGrid += 1
+			h.GridColumn = columnGrid
+			h.GridRow = rowGrid
+			holidays = append(holidays, h)
+			if columnGrid == 4 {
+				columnGrid = 0
+				rowGrid += 1
+			}
+		}
+		return holidays
 	}
 
 	return model.Holidays{}

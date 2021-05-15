@@ -1,24 +1,12 @@
 .holidays {
-  background:greenyellow;
+  /* background:greenyellow; */
   display: grid;
   grid-template-columns: 25% 25% 25% 25%;
-  grid-template-rows: 33.33% 33.33% 33.33%;
+  /* grid-template-rows: 33.33% 33.33% 33.33%; */
   height: calc(100vh - 50px);
 }
 
 
-.holidays__main-1 {
-  
-}
-
-.holidays__main-2 {
-  
-}
-
-.holidays__main-3 {
-  
-}
-
-.holidays__main-4 {
+.holidays__main {
   
 }
