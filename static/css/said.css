@@ -7,7 +7,6 @@
 .flexbox-item{
     margin: 10px;
     width:100%;
-    /* border:1px solid #333; */
 } 
 .flexbox-item-1{
    
@@ -15,7 +14,6 @@
 .flexbox-item-2{
     justify-content: center;
     display: grid;
-    
 }
 .flexbox-item-3{
 
@@ -35,6 +33,7 @@
     width: 70%;
     height: 100%;
     border:none;
+    outline: none;
     background: transparent;
     padding: 0 5px;
 }
@@ -50,6 +49,8 @@
 .said-card[data-error] .input{
     border-color: #c92432;
     color: #c92432;
+    border: 1px solid #c92432;
+    outline: none;
     /* background: #fffafa; */
 }
 
