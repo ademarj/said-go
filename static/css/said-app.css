@@ -1,0 +1,17 @@
+.flexbox-container{
+
+}
+.flexbox-item{
+    margin: 10px;
+    width:100%;
+} 
+.flexbox-item-1{
+   
+}
+.flexbox-item-2{
+    justify-content: center;
+    display: grid;
+}
+.flexbox-item-3{
+
+}

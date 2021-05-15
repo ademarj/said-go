@@ -1,22 +1,5 @@
-*{padding: 0; margin:0; border:0; box-sizing: border-box;}
-
-
-.flexbox-container{
-
-}
-.flexbox-item{
-    margin: 10px;
-    width:100%;
-} 
-.flexbox-item-1{
-   
-}
-.flexbox-item-2{
-    justify-content: center;
-    display: grid;
-}
-.flexbox-item-3{
-
+.said-card-search{
+    width: 100%;
 }
 
 .said-card{
@@ -54,7 +37,7 @@
     /* background: #fffafa; */
 }
 
-.success{
+.said-card-success{
     color: #fff;
     background: #337ab7 !important;
     border-radius: 4px;
@@ -66,8 +49,4 @@
     color: #c92432;
     display: block;
     margin:10px 0;
-}
-
-.search{
-    width: 100%;
 }

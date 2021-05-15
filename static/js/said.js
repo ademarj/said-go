@@ -27,15 +27,15 @@ function setInputFilter(textbox, inputFilter) {
 
         if(this.value.length === 13){
             if(!checksumDig(this.value)){
-                subButton.classList.remove("success");
+                subButton.classList.remove("said-card-success");
                 subButton.disabled = true;
                 saNumberId.parentElement.setAttribute('data-error',ERROR_MESSAGE);
                 return;
             }
-            subButton.classList.add("success");
+            subButton.classList.add("said-card-success");
             return subButton.disabled = false;
         }
-        subButton.classList.remove("success");
+        subButton.classList.remove("said-card-success");
         subButton.disabled = true;
         
       });
