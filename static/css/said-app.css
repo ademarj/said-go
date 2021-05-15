@@ -1,17 +1,20 @@
-.flexbox-container{
+.said-app{
+    background: #f1f1f1;
+    display: grid;  
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.said-header{
 
 }
-.flexbox-item{
+.said-container{
+
+}
+.said-footer{
+
+}
+
+.said-container-item{
     margin: 10px;
     width:100%;
 } 
-.flexbox-item-1{
-   
-}
-.flexbox-item-2{
-    justify-content: center;
-    display: grid;
-}
-.flexbox-item-3{
-
-}

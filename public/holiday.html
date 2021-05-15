@@ -14,7 +14,7 @@
 </head>
 <body>
     <div class="flexbox-container">
-        <div class="flexbox-item flexbox-item-1">
+        <div class="said-container-item">
             <div class="said-card-search">
                 <form id="form" method="post" autocomplete="off" action="/holiday">
                     <div class="said-card">
@@ -24,7 +24,7 @@
                 </form>
             </div>
         </div>
-        <div class="flexbox-item flexbox-item-2">
+        <div class="said-container-item">
             {{ $length := len .Holidays }} {{ if gt $length 0 }}
             <table>
                 <thead>
@@ -48,9 +48,7 @@
             </table>
             {{end}}
         </div>
-        <div class="flexbox-item flexbox-item-3">
-
-        </div>
+    
     </div>
 </body>
 </html>
