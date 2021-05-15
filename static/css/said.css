@@ -1,0 +1,48 @@
+*{padding: 0; margin:0; border:0; box-sizing: border-box;}
+
+.said-card{
+    float: left;
+    width:20%;
+    height:40px;
+    border: 1px solid #CCC;
+    border-radius: 5px;
+
+    /* margin: 100px; */
+}
+
+.said-card input[type='text']{
+    float: left;
+    width: 80%;
+    height: 100%;
+    border:none;
+    background: transparent;
+    padding: 0 5px;
+}
+
+.said-card input[type='submit']{
+    float: left;
+    width: 20%;
+    height: 100%;
+    border:none;
+    background: #CCC;
+}
+
+.said-card[data-error] .input{
+    border-color: #c92432;
+    color: #c92432;
+    /* background: #fffafa; */
+}
+
+.success{
+    color: #fff;
+    background: #337ab7 !important;
+    border-radius: 4px;
+}
+
+.said-card[data-error]::after{
+    content: attr(data-error);
+    font-size: 0.85em;
+    color: #c92432;
+    display: block;
+    margin:10px 0;
+}

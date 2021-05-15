@@ -6,16 +6,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>South Africa ID</title>
     <script src="static/js/said.js" defer></script>
+    <link rel="stylesheet" href="static/css/said.css">
 </head>
 <body>
-    <div id="error"></div>
-    <form id="form" method="post" autocomplete="off" action="/holiday">
-        <input type="text" 
-        placeholder="ID Number" 
-        maxlength="13"
-        id="southAfricaNumberId" 
-        name="southAfricaNumberId" />
-        <input type="submit" id="sub"/>
-    </form>
+
+    <div class="container">
+        <form id="form" method="post" autocomplete="off" action="/holiday">
+            <div class="said-card">
+                <input type="text" class="input" placeholder="ID Number" maxlength="13" id="southAfricaNumberId" name="southAfricaNumberId" />
+                <input type="submit" id="sub" value="Search"/>
+            </div>
+        </form>
+    </div>
 </body>
 </html>

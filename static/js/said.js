@@ -1,29 +1,15 @@
 const saNumberId = document.getElementById('southAfricaNumberId')
 const form = document.getElementById('form')
-const errorElement = document.getElementById('error');
 const subButton = document.getElementById('sub');
 subButton.disabled=true;
 
 const SA_CITIZEN = 0;
 const PERMANENT_RESIDENT = 1;
-const INVALID_MESSAGE = 'Invalid ID Number'
+const ERROR_MESSAGE = 'ID Number Invalid'
 
-
-form.addEventListener('submit', (el)=>{
-    let messages = []
-    if (saNumberId.value === '' || saNumberId.value == null ){
-        messages.push('ID Number is required')
-    }
-
-    if(messages.length > 0){
-        el.preventDefault();
-        setMessageError(messages.join(', '))
-    }
+saNumberId.addEventListener('input', ()=>{
+    saNumberId.parentElement.removeAttribute('data-error')
 })
-
-function setMessageError(message){
-    errorElement.innerText = message;
-}
 
 function setInputFilter(textbox, inputFilter) {
     ["input", "keydown", "keyup", "mousedown", "mouseup", "select", "contextmenu", "drop"].forEach(function(event) {
@@ -41,14 +27,16 @@ function setInputFilter(textbox, inputFilter) {
 
         if(this.value.length === 13){
             if(!checksumDig(this.value)){
+                subButton.classList.remove("success");
                 subButton.disabled = true;
-                return setMessageError(INVALID_MESSAGE)
+                saNumberId.parentElement.setAttribute('data-error',ERROR_MESSAGE);
+                return;
             }
+            subButton.classList.add("success");
             return subButton.disabled = false;
         }
-         
+        subButton.classList.remove("success");
         subButton.disabled = true;
-        setMessageError('')
         
       });
     });
@@ -62,10 +50,6 @@ function checksumDig(southAfricaId){
     
     let citizenshipCode = southAfricaId.substring(10,11)
     if(!(citizenshipCode == SA_CITIZEN || citizenshipCode == PERMANENT_RESIDENT)) return false
-    
-    let genderCode = southAfricaId.substring(6,7)
-    let sssCode = southAfricaId.substring(7,10)
-    let checksumCode = southAfricaId.substring(12)
     
     let ACode = parseInt(southAfricaId.substring(11,12))
 
