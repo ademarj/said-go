@@ -4,11 +4,50 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>South Africa Holidays</title>
+    <title>South Africa ID</title>
+    <script src="static/js/said.js" defer></script>
+    <link rel="stylesheet" href="static/css/said.css">
+    <link rel="stylesheet" href="static/css/holidays.css">
 </head>
 <body>
-    {{range .Holidays}}
-        <p>{{.Name}}<p>
-    {{end}}
+    <div class="flexbox-container">
+        <div class="flexbox-item flexbox-item-1">
+            <div class="search">
+                <form id="form" method="post" autocomplete="off" action="/holiday">
+                    <div class="said-card">
+                        <input type="text" class="input" placeholder="ID Number" maxlength="13" id="southAfricaNumberId" name="southAfricaNumberId" />
+                        <input type="submit" id="sub" value="Search"/>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="flexbox-item flexbox-item-2">
+            {{ $length := len .Holidays }} {{ if gt $length 0 }}
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>Date</th>
+                        <th>Contact Id</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{range .Holidays}}
+                        <tr>
+                            <td>{{.Name}}</td>
+                            <td>{{.Description}}</td>
+                            <td>{{.Date}}</td>
+                            <td>{{.ContactId}}</td>
+                        </tr>
+                    {{end}}
+                </tbody>
+            </table>
+            {{end}}
+        </div>
+        <div class="flexbox-item flexbox-item-3">
+
+        </div>
+    </div>
 </body>
 </html>
