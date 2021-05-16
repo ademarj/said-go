@@ -10,7 +10,7 @@ import (
 
 func GetHolidaysFrom(contactId string) ([]model.Holiday, error) {
 	con := db.Connect()
-	sql := "select id, name, date, description, id_number from holiday where id_number = ?"
+	sql := "select id, name, date, description, id_number, type from holiday where id_number = ?"
 	rs, erro := con.Query(sql, contactId)
 	if erro != nil {
 		return []model.Holiday{}, erro
@@ -18,7 +18,7 @@ func GetHolidaysFrom(contactId string) ([]model.Holiday, error) {
 	var holidays model.Holidays
 	for rs.Next() {
 		var holiday model.Holiday
-		erro := rs.Scan(&holiday.Id, &holiday.Name, &holiday.Date, &holiday.Description, &holiday.ContactId)
+		erro := rs.Scan(&holiday.Id, &holiday.Name, &holiday.Date, &holiday.Description, &holiday.ContactId, &holiday.Type)
 
 		if erro != nil {
 			return []model.Holiday{}, erro
@@ -34,12 +34,12 @@ func GetHolidaysFrom(contactId string) ([]model.Holiday, error) {
 
 func SaveHoliday(holidays []model.Holiday) {
 	if len(holidays) > 0 {
-		sql := "insert into holiday (id, name, date, description, id_number) values (?, ?, ?, ?, ?)"
+		sql := "insert into holiday (id, name, date, description, id_number, type) values (?, ?, ?, ?, ?, ?)"
 		con := db.Connect()
 		defer con.Close()
 		stmts := []*db.PipelineStmt{}
 		for _, holiday := range holidays {
-			stmts = append(stmts, db.NewPipelineStmt(sql, holiday.Id, holiday.Name, holiday.Date, holiday.Description, holiday.ContactId))
+			stmts = append(stmts, db.NewPipelineStmt(sql, holiday.Id, holiday.Name, holiday.Date, holiday.Description, holiday.ContactId, holiday.Type))
 		}
 		err := db.WithTransaction(con, func(tx db.Transaction) error {
 			_, err := db.RunPipeline(tx, stmts...)

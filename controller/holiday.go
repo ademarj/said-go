@@ -10,6 +10,7 @@ import (
 	"github.com/ademarj/said-go/said"
 	"github.com/ademarj/said-go/util/security"
 	"github.com/ademarj/said-go/view"
+	"github.com/agrison/go-commons-lang/stringUtils"
 	"github.com/tidwall/gjson"
 )
 
@@ -37,6 +38,7 @@ func searchHolidays(contact model.Contact) view.Holidays {
 			name := gjson.Get(value.String(), "name")
 			description := gjson.Get(value.String(), "description")
 			date := gjson.Get(value.String(), "date.iso")
+			htypes := gjson.Get(value.String(), "type")
 
 			holiday := model.Holiday{
 				Id:          fmt.Sprintf("%x", security.GenerateKey([]string{contact.IdNumber, ":", contact.DateOfBirthday, ":", name.String()})),
@@ -44,6 +46,7 @@ func searchHolidays(contact model.Contact) view.Holidays {
 				Description: description.String(),
 				Date:        date.String(),
 				ContactId:   contact.IdNumber,
+				Type:        htypes.String(),
 			}
 
 			holidaysFromApi = append(holidaysFromApi, holiday)
@@ -94,6 +97,10 @@ func prepareView(holidaysMerged []model.Holiday) view.Holidays {
 	for _, h := range holidaysMerged {
 		columnGrid += 1
 
+		h.Type = stringUtils.Remove(h.Type, "[")
+		h.Type = stringUtils.Remove(h.Type, "]")
+		h.Type = stringUtils.Remove(h.Type, "\"")
+
 		holidays = append(holidays, view.Holiday{
 			Id:          h.Id,
 			Name:        h.Name,
@@ -109,6 +116,7 @@ func prepareView(holidaysMerged []model.Holiday) view.Holidays {
 				LastDayOfMonth: helper.LastDayOfMonth(h.Date),
 				Days:           helper.DaysOfMonth(helper.LastDayOfMonth(h.Date)),
 			},
+			Type: h.Type,
 		})
 		if columnGrid == 4 {
 			columnGrid = 0

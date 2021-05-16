@@ -10,18 +10,30 @@ import (
 	jmodel "github.com/ademarj/said-go/http/json"
 	"github.com/ademarj/said-go/said"
 	"github.com/ademarj/said-go/util/security"
+	"github.com/agrison/go-commons-lang/stringUtils"
 	"github.com/tidwall/gjson"
 )
 
 const (
+	/*
+		[ HOLIDAY_TYPE ]
+			national 	- Returns public, federal and bank holidays
+			local 		- Returns local, regional and state holidays
+			religious 	- Return religious holidays:
+							buddhism, christian, hinduism, muslim, etc
+			observance 	- Observance, Seasons, Times
+	*/
+
+	HOLIDAY_TYPE              = "national" // "" for all holidays type
 	ALL_HOLIDAYS_CURRENT_YEAR = false
 	URL_SERVICE               = "URL_CALENDARIFIC_REST_API"
 	API_KEY                   = "API_KEY_CALENDARIFIC_REST_API"
-	COUNTRY                   = "ZA"
+	COUNTRY                   = "US"
 	SUCCESS                   = "success"
 	ERROR_RESULT              = "{success: false}"
 	URL_API_COUNTRY           = "%s&api_key=%s&country=%s"
 	URL_CURRENT_YEAR          = "%s&year=%d"
+	URL_HOLIDAY_TYPE          = "%s&type=%s"
 	URL_BIRTHDAY              = "%s&year=%d&month=%d&day=%d"
 	NODE_HOLIDAYS             = "response.holidays"
 )
@@ -46,6 +58,11 @@ func makeUrlRequest(numberId string) string {
 	url, _ := security.GetSecret(URL_SERVICE)
 	apikey, _ := security.GetSecret(API_KEY)
 	url = fmt.Sprintf(URL_API_COUNTRY, url, apikey, COUNTRY)
+
+	if stringUtils.IsNotBlank(HOLIDAY_TYPE) {
+		url = fmt.Sprintf(URL_HOLIDAY_TYPE, url, HOLIDAY_TYPE)
+	}
+
 	if ALL_HOLIDAYS_CURRENT_YEAR {
 		return fmt.Sprintf(URL_CURRENT_YEAR, url, helper.CurrentYear())
 	}

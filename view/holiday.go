@@ -9,6 +9,7 @@ type Holiday struct {
 	GridColumn  int
 	GridRow     int
 	Calendar    Calendar
+	Type        string
 }
 
 type Holidays struct {

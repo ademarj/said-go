@@ -35,14 +35,14 @@
               <div class="container holidays__main-1 box">
                 <div class="topic">{{ .Name}}</div>
                 <div class="content">
-                  <input type="radio" name="slider" checked id="home">
-                  <input type="radio" name="slider" id="blog">
-                  <input type="radio" name="slider" id="help">
-                  <input type="radio" name="slider" id="code">
-                  <input type="radio" name="slider" id="about">
+                  <input type="radio" name="slider" data-id={{``}}a{{.Id}}{{``}} checked id="home">
+                  <input type="radio" name="slider" data-id={{``}}b{{.Id}}{{``}} id="blog">
+                  <input type="radio" name="slider" data-id={{``}}c{{.Id}}{{``}} id="help">
+                  <input type="radio" name="slider" data-id={{``}}d{{.Id}}{{``}} id="code">
+                  <input type="radio" name="slider" data-id={{``}}e{{.Id}}{{``}} id="about">
                   <div class="list">
                     <label for="home" class="home">
-                    <i class="fas fa-home"></i>
+                    <i class="fas fa-calendar"></i>
                     </label>
                     <label for="blog" class="blog">
                       <span class="icon"><i class="fas fa-blog"></i></span>
@@ -63,7 +63,7 @@
                         <div class="title"></div>
                         <!---->
                         <div>
-                          <h3 class="said_card_info">{{ .Name}}</h3>
+                          <h3 class="said_card_info">{{ .Type}}</h3>
                           <div class="calendar">
                             <div class="month">      
                               <ul>
