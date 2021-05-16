@@ -5,12 +5,14 @@ import (
 
 	"github.com/ademarj/said-go/db/dao"
 	"github.com/ademarj/said-go/db/model"
+	"github.com/ademarj/said-go/helper"
 	"github.com/ademarj/said-go/http/api"
 	"github.com/ademarj/said-go/util/security"
+	"github.com/ademarj/said-go/view"
 	"github.com/tidwall/gjson"
 )
 
-func SearchHolidays(contact model.Contact) model.Holidays {
+func SearchHolidays(contact model.Contact) view.Holidays {
 	success, result := api.Calendarific(contact.IdNumber)
 
 	if success {
@@ -39,30 +41,10 @@ func SearchHolidays(contact model.Contact) model.Holidays {
 
 		dao.SaveHoliday(filtered)
 
-		//return append(filtered, holidaysFromContact...)
-
-		holidaysMerged := append(filtered, holidaysFromContact...)
-		if len(holidaysMerged) <= 0 {
-			return model.Holidays{}
-		}
-
-		var holidays []model.Holiday
-		columnGrid := 0
-		rowGrid := 1
-		for _, h := range holidaysMerged {
-			columnGrid += 1
-			h.GridColumn = columnGrid
-			h.GridRow = rowGrid
-			holidays = append(holidays, h)
-			if columnGrid == 4 {
-				columnGrid = 0
-				rowGrid += 1
-			}
-		}
-		return holidays
+		return prepareView(append(filtered, holidaysFromContact...))
 	}
 
-	return model.Holidays{}
+	return view.Holidays{}
 }
 
 func filter(holidaysFromContact model.Holidays, holidaysFromApi model.Holidays) model.Holidays {
@@ -86,4 +68,37 @@ func filter(holidaysFromContact model.Holidays, holidaysFromApi model.Holidays) 
 		return holidaysFromApi
 	}
 	return model.Holidays{}
+}
+
+func prepareView(holidaysMerged []model.Holiday) view.Holidays {
+	if len(holidaysMerged) <= 0 {
+		return view.Holidays{}
+	}
+	var holidays []view.Holiday
+	columnGrid := 0
+	rowGrid := 1
+	for _, h := range holidaysMerged {
+		columnGrid += 1
+
+		holidays = append(holidays, view.Holiday{
+			Id:          h.Id,
+			Name:        h.Name,
+			Description: h.Description,
+			Date:        h.Date,
+			ContactId:   h.ContactId,
+			GridColumn:  columnGrid,
+			GridRow:     rowGrid,
+			Calendar: view.Calendar{
+				Year:           helper.Year(h.Date),
+				Month:          helper.Month(h.Date),
+				Day:            helper.Day(h.Date),
+				LastDayOfMonth: helper.LastDayOfMonth(h.Date),
+			},
+		})
+		if columnGrid == 4 {
+			columnGrid = 0
+			rowGrid += 1
+		}
+	}
+	return view.Holidays{Holidays: holidays}
 }

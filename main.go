@@ -6,7 +6,6 @@ import (
 
 	"github.com/ademarj/said-go/controller"
 	"github.com/ademarj/said-go/db/dao"
-	"github.com/ademarj/said-go/db/model"
 	"github.com/ademarj/said-go/said"
 	"github.com/gorilla/mux"
 )
@@ -44,10 +43,8 @@ func holidaysInfoPage(response http.ResponseWriter, request *http.Request) {
 			dao.SaveNewContact(contact)
 		}
 
-		holidays := controller.SearchHolidays(contact)
-
 		t, _ := template.ParseFiles(holiday_page)
-		t.Execute(response, model.HolidaysView{Holidays: holidays})
+		t.Execute(response, controller.SearchHolidays(contact))
 		return
 	}
 

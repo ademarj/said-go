@@ -11,7 +11,3 @@ type Holiday struct {
 }
 
 type Holidays []Holiday
-
-type HolidaysView struct {
-	Holidays []Holiday
-}

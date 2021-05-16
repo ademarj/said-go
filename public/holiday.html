@@ -40,8 +40,8 @@
                                   <li class="prev">&#10094;</li>
                                   <li class="next">&#10095;</li>
                                   <li>
-                                    August<br>
-                                    <span style="font-size:18px">2021</span>
+                                    {{ .Calendar.Month}}<br>
+                                    <span style="font-size:18px">{{ .Calendar.Year}}</span>
                                   </li>
                                 </ul>
                               </div>
@@ -106,6 +106,19 @@
     {{ $firstRow := 1 }}
 
 
+    {{$row := .GridRow}} {{ if eq $row $firstRow}} 
+                    
+        <div class="holidays__main-1 box">
+            <h3 class="said_card_info">{{ .Name}}</h3>
+        </div>
+
+    {{else}}
+        <div class="holidays__main-1 box">
+            <h3 class="said_card_info">{{ .ContactId}}</h3>
+        </div>
+    {{end}}
+
+    
     {{$row := .GridRow}} {{ if eq $row $firstRow}} 
                     
         <div class="holidays__main-1 box">
