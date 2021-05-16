@@ -3,11 +3,12 @@ package main
 import (
 	"database/sql"
 
+	"github.com/ademarj/said-go/db"
 	_ "github.com/go-sql-driver/mysql"
 )
 
-func exec(db *sql.DB, sql string) sql.Result {
-	result, err := db.Exec(sql)
+func exec(con *sql.DB, sql string) sql.Result {
+	result, err := con.Exec(sql)
 	if err != nil {
 		panic(err)
 	}
@@ -15,17 +16,13 @@ func exec(db *sql.DB, sql string) sql.Result {
 }
 
 func main() {
-	db, err := sql.Open("mysql", "root:7FZijfGP-WwAK!8PwHYTJ7vdGmC9g@/")
-	if err != nil {
-		panic(err)
-	}
+	con := db.Connect()
+	defer con.Close()
 
-	defer db.Close()
-
-	exec(db, "create database if not exists said_db")
-	exec(db, "use said_db")
-	exec(db, "drop table if exists contact")
-	exec(db, `create table contact(
+	exec(con, "create database if not exists said_db")
+	exec(con, "use said_db")
+	exec(con, "drop table if exists contact")
+	exec(con, `create table contact(
 		id_number varchar(13),
 		date_of_birth date NOT NULL,
 		gender varchar(50),
