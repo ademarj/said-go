@@ -7,12 +7,30 @@ import (
 	"github.com/ademarj/said-go/db/model"
 	"github.com/ademarj/said-go/helper"
 	"github.com/ademarj/said-go/http/api"
+	"github.com/ademarj/said-go/said"
 	"github.com/ademarj/said-go/util/security"
 	"github.com/ademarj/said-go/view"
 	"github.com/tidwall/gjson"
 )
 
-func SearchHolidays(contact model.Contact) view.Holidays {
+func BuildViewHoliday(saNumberId string) (view.Holidays, bool) {
+	contact, success := said.CreateContactFrom(saNumberId)
+
+	if success {
+		contactFromDB, _ := dao.FindBy(contact.IdNumber)
+		if contact.IdNumber == contactFromDB.IdNumber {
+			contact.Counter = contact.Counter + contactFromDB.Counter
+			dao.UpdateContact(contact)
+		} else {
+			dao.SaveNewContact(contact)
+		}
+		return searchHolidays(contact), true
+	}
+
+	return view.Holidays{}, false
+}
+
+func searchHolidays(contact model.Contact) view.Holidays {
 	success, result := api.Calendarific(contact.IdNumber)
 
 	if success {
@@ -31,14 +49,11 @@ func SearchHolidays(contact model.Contact) view.Holidays {
 			}
 
 			holidaysFromApi = append(holidaysFromApi, holiday)
-
 			return true // keep iterating
 		})
 
 		holidaysFromContact, _ := dao.GetHolidaysFrom(contact.IdNumber)
-
 		filtered := filter(holidaysFromContact, holidaysFromApi)
-
 		dao.SaveHoliday(filtered)
 
 		return prepareView(append(filtered, holidaysFromContact...))
