@@ -11,6 +11,7 @@ import (
 const (
 	INDEX_PAGE        = "public/index.html"
 	HOLIDAY_PAGE      = "public/holiday.html"
+	HOLIDAYS_PAGE     = "public/holidays.html"
 	ROOT_PATH         = "/"
 	RESOURCE_DIR      = "/static/"
 	REQUEST_NUMBER_ID = "southAfricaNumberId"
@@ -27,7 +28,11 @@ func indexPage(response http.ResponseWriter, request *http.Request) {
 func holidayPage(response http.ResponseWriter, request *http.Request) {
 	numberId := request.FormValue(REQUEST_NUMBER_ID)
 	view, _ := controller.BuildViewHoliday(numberId)
-	t, _ := template.ParseFiles(HOLIDAY_PAGE)
+	renderPage := HOLIDAY_PAGE
+	if len(view.Holidays) > 1 {
+		renderPage = HOLIDAYS_PAGE
+	}
+	t, _ := template.ParseFiles(renderPage)
 	t.Execute(response, view)
 }
 

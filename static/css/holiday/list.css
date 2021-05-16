@@ -1,0 +1,5 @@
+.holidays {
+  display: grid;
+  grid-template-columns: 25% 25% 25% 25%;
+  height: calc(100vh - 50px);
+}

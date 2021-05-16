@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="static/css/reset.css">
     <link rel="stylesheet" href="static/css/said-app.css">
     <link rel="stylesheet" href="static/css/search.css">
-    <link rel="stylesheet" href="static/css/holiday/item.css">
+    <link rel="stylesheet" href="static/css/holiday/list.css">
     <link rel="stylesheet" href="static/css/calendar.css">
     <link rel="stylesheet" href="static/css/holiday/detail.css">
     <!-- Fontawesome CDN Link -->
@@ -32,7 +32,7 @@
       <section class="holidays">
         {{ $length := len .Holidays }} {{ if gt $length 0 }}
           {{range .Holidays}}
-              <div class="container holidays__main_center box">
+              <div class="container holidays__main-1 box">
                 <div class="topic">{{ .Name}}</div>
                 <div class="content">
                   <input type="radio" name="slider" data-id={{``}}a{{.Id}}{{``}} checked id="home">
