@@ -15,7 +15,6 @@ import (
 
 func BuildViewHoliday(saNumberId string) (view.Holidays, bool) {
 	contact, success := said.CreateContactFrom(saNumberId)
-
 	if success {
 		contactFromDB, _ := dao.FindBy(contact.IdNumber)
 		if contact.IdNumber == contactFromDB.IdNumber {
@@ -26,7 +25,6 @@ func BuildViewHoliday(saNumberId string) (view.Holidays, bool) {
 		}
 		return searchHolidays(contact), true
 	}
-
 	return view.Holidays{}, false
 }
 

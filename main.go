@@ -9,39 +9,33 @@ import (
 )
 
 const (
-	code_320       = 320
-	index_page     = "public/index.html"
-	holiday_page   = "public/holiday.html"
-	root_path      = "/"
-	resource_dir   = "/static/"
-	req_said       = "southAfricaNumberId"
-	holiday_action = "/holiday"
-	http_port      = ":9000"
-	method_post    = "POST"
+	INDEX_PAGE        = "public/index.html"
+	HOLIDAY_PAGE      = "public/holiday.html"
+	ROOT_PATH         = "/"
+	RESOURCE_DIR      = "/static/"
+	REQUEST_NUMBER_ID = "southAfricaNumberId"
+	HOLIDAY_ACTION    = "/holiday"
+	HTTP_PORT         = ":9000"
+	POST              = "POST"
 )
 
 func indexPage(response http.ResponseWriter, request *http.Request) {
-	t, _ := template.ParseFiles(index_page)
+	t, _ := template.ParseFiles(INDEX_PAGE)
 	t.Execute(response, nil)
 }
 
 func holidayPage(response http.ResponseWriter, request *http.Request) {
-	redirectPage := root_path
-	saNumberId := request.FormValue(req_said)
-	view, success := controller.BuildViewHoliday(saNumberId)
-	if success {
-		t, _ := template.ParseFiles(holiday_page)
-		t.Execute(response, view)
-	} else {
-		http.Redirect(response, request, redirectPage, code_320)
-	}
+	numberId := request.FormValue(REQUEST_NUMBER_ID)
+	view, _ := controller.BuildViewHoliday(numberId)
+	t, _ := template.ParseFiles(HOLIDAY_PAGE)
+	t.Execute(response, view)
 }
 
 var router = InitRouter()
 
 func InitRouter() *mux.Router {
 	router := mux.NewRouter().StrictSlash(true)
-	resourceDIR := resource_dir
+	resourceDIR := RESOURCE_DIR
 	router.
 		PathPrefix(resourceDIR).
 		Handler(http.StripPrefix(resourceDIR, http.FileServer(http.Dir("."+resourceDIR))))
@@ -49,8 +43,8 @@ func InitRouter() *mux.Router {
 }
 
 func main() {
-	router.HandleFunc(root_path, indexPage)
-	router.HandleFunc(holiday_action, holidayPage).Methods(method_post)
-	http.Handle(root_path, router)
-	http.ListenAndServe(http_port, nil)
+	router.HandleFunc(ROOT_PATH, indexPage)
+	router.HandleFunc(HOLIDAY_ACTION, holidayPage).Methods(POST)
+	http.Handle(ROOT_PATH, router)
+	http.ListenAndServe(HTTP_PORT, nil)
 }
