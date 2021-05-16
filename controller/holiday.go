@@ -93,6 +93,7 @@ func prepareView(holidaysMerged []model.Holiday) view.Holidays {
 				Month:          helper.Month(h.Date),
 				Day:            helper.Day(h.Date),
 				LastDayOfMonth: helper.LastDayOfMonth(h.Date),
+				Days:           helper.DaysOfMonth(helper.LastDayOfMonth(h.Date)),
 			},
 		})
 		if columnGrid == 4 {

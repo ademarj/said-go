@@ -5,4 +5,5 @@ type Calendar struct {
 	Month          string
 	Day            int
 	LastDayOfMonth int
+	Days           []int
 }

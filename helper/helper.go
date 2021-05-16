@@ -24,7 +24,7 @@ func Year(date string) string {
 }
 
 func Day(date string) int {
-	return IntValue(stringUtils.Left(date, 2))
+	return IntValue(stringUtils.Right(date, 2))
 }
 
 func Month(date string) string {
@@ -42,4 +42,12 @@ func LastDayOfMonth(date string) int {
 	lastDay := IntValue(stringUtils.Left(convertedDateString, 2))
 	fmt.Printf("Last Day : %d\n", lastDay)
 	return lastDay
+}
+
+func DaysOfMonth(count int) []int {
+	days := []int{}
+	for i := 0; i < count; i++ {
+		days = append(days, i+1)
+	}
+	return days
 }
