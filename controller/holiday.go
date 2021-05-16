@@ -59,7 +59,8 @@ func searchHolidays(contact model.Contact) view.Holidays {
 		return prepareView(append(filtered, holidaysFromContact...))
 	}
 
-	return view.Holidays{}
+	holidaysFromContact, _ := dao.GetHolidaysFrom(contact.IdNumber)
+	return prepareView(holidaysFromContact)
 }
 
 func filter(holidaysFromContact model.Holidays, holidaysFromApi model.Holidays) model.Holidays {

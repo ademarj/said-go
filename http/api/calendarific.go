@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
-	"log"
 	"net/http"
 
 	"github.com/ademarj/said-go/helper"
@@ -30,7 +29,6 @@ const (
 func Calendarific(numberId string) (success bool, jsonResult gjson.Result) {
 	resp, err := http.Get(makeUrlRequest(numberId))
 	if err != nil {
-		log.Printf("ERRO MAKE REQUEST %s", err.Error())
 		return false, gjson.Get(ERROR_RESULT, SUCCESS)
 	}
 	var response jmodel.ResponseRest
