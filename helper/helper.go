@@ -1,6 +1,7 @@
 package helper
 
 import (
+	"fmt"
 	"strconv"
 	"time"
 
@@ -22,6 +23,14 @@ func CurrentYear() int {
 
 func Year(date string) string {
 	return stringUtils.Left(date, 4)
+}
+
+func GetFullYearFrom(yy string, mm string, dd string) string {
+	currentYY := stringUtils.Right(time.Now().Format("01-02-2006"), 2)
+	if IntValue(yy) >= IntValue(currentYY) {
+		return fmt.Sprintf("19%s-%s-%s", yy, mm, dd)
+	}
+	return fmt.Sprintf("20%s-%s-%s", currentYY, mm, dd)
 }
 
 func Day(date string) int {

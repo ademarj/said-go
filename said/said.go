@@ -56,31 +56,20 @@ func YYMMDD(numberId string) string {
 }
 
 func Birthday(numberId string) string {
-	currentTime := time.Now()
-	currentYY := stringUtils.Right(currentTime.Format("01-02-2006"), 2)
-	yy := YY(numberId)
-
-	if helper.IntValue(yy) >= helper.IntValue(currentYY) {
-		return fmt.Sprintf("19%s-%s-%s", yy, MM(numberId), DD(numberId))
-	}
-	return fmt.Sprintf("20%s-%s-%s", currentYY, MM(numberId), DD(numberId))
+	return helper.GetFullYearFrom(YY(numberId), MM(numberId), DD(numberId))
 }
 
 func G(numberId string) int {
-	gssscaz := stringUtils.Right(numberId, 7)
-	genderCode := stringUtils.Left(gssscaz, 1)
-	code, _ := strconv.Atoi(genderCode)
+	code, _ := strconv.Atoi(stringUtils.Left(stringUtils.Right(numberId, 7), 1))
 	return code
 }
 
 func C(numberId string) int {
-	caz := stringUtils.Right(numberId, 3)
-	return helper.IntValue(stringUtils.Left(caz, 1))
+	return helper.IntValue(stringUtils.Left(stringUtils.Right(numberId, 3), 1))
 }
 
 func A(numberId string) int {
-	az := stringUtils.Right(numberId, 2)
-	return helper.IntValue(stringUtils.Left(az, 1))
+	return helper.IntValue(stringUtils.Left(stringUtils.Right(numberId, 2), 1))
 }
 
 func CreateContactFrom(numberId string) (model.Contact, bool) {
