@@ -11,6 +11,11 @@ saNumberId.addEventListener('input', ()=>{
     saNumberId.parentElement.removeAttribute('data-error')
 })
 
+form.addEventListener('submit', ()=>{
+    subButton.disabled = true;
+    subButton.classList.remove("said-card-success");
+})
+
 function setInputFilter(textbox, inputFilter) {
     ["input", "keydown", "keyup", "mousedown", "mouseup", "select", "contextmenu", "drop"].forEach(function(event) {
       textbox.addEventListener(event, function() {

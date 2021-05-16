@@ -12,69 +12,108 @@
     <link rel="stylesheet" href="static/css/search.css">
     <link rel="stylesheet" href="static/css/holidays.css">
     <link rel="stylesheet" href="static/css/calendar.css">
+    <link rel="stylesheet" href="static/css/holidays.detail.css">
+    <!-- Fontawesome CDN Link -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"/>
 </head>
 <body class="said-app">
     <div class="said-header"></div>
     <div class="said-container">
-
-        <div class="said-container-item">
-            <div class="said-card-search">
-                <form id="form" method="post" autocomplete="off" action="/holiday">
-                    <div class="said-card">
-                        <input type="text" class="input" placeholder="ID Number" maxlength="13" id="southAfricaNumberId" name="southAfricaNumberId" />
-                        <input type="submit" id="sub" value="Search"/>
-                    </div>
-                </form>
-            </div>
-        </div>
-        <section class="holidays">
-            {{ $length := len .Holidays }} {{ if gt $length 0 }}
-
-                {{range .Holidays}}
-
-                    <div class="holidays__main-1 box">
-                        <h3 class="said_card_info">{{ .Name}}</h3>
-                        <div class="calendar">
+      <div class="said-container-item">
+          <div class="said-card-search">
+              <form id="form" method="post" autocomplete="off" action="/holiday">
+                  <div class="said-card">
+                      <input type="text" class="input" placeholder="ID Number" maxlength="13" id="southAfricaNumberId" name="southAfricaNumberId" />
+                      <input type="submit" id="sub" value="Search"/>
+                  </div>
+              </form>
+          </div>
+      </div>
+      <section class="holidays">
+        {{ $length := len .Holidays }} {{ if gt $length 0 }}
+          {{range .Holidays}}
+              <div class="container holidays__main-1 box">
+                <div class="topic">{{ .Name}}</div>
+                <div class="content">
+                  <input type="radio" name="slider" checked id="home">
+                  <input type="radio" name="slider" id="blog">
+                  <input type="radio" name="slider" id="help">
+                  <input type="radio" name="slider" id="code">
+                  <input type="radio" name="slider" id="about">
+                  <div class="list">
+                    <label for="home" class="home">
+                    <i class="fas fa-home"></i>
+                    </label>
+                    <label for="blog" class="blog">
+                      <span class="icon"><i class="fas fa-blog"></i></span>
+                    </label>
+                    <label for="help" class="help">
+                      <span class="icon"><i class="far fa-envelope"></i></span>
+                    </label>
+                    <label for="code" class="code">
+                      <span class="icon"><i class="fas fa-code"></i></span>
+                    </label>
+                    <label for="about" class="about">
+                      <span class="icon"><i class="far fa-user"></i></span>
+                    </label>
+                    <div class="slider"></div>
+                  </div>
+                  <div class="text-content">
+                    <div class="home text">
+                        <div class="title"></div>
+                        <!---->
+                        <div>
+                          <h3 class="said_card_info">{{ .Name}}</h3>
+                          <div class="calendar">
                             <div class="month">      
-                                <ul>
-                                  <li class="prev">&#10094;</li>
-                                  <li class="next">&#10095;</li>
-                                  <li>
-                                    {{ .Calendar.Month}}<br>
-                                    <span style="font-size:18px">{{ .Calendar.Year}}</span>
-                                  </li>
-                                </ul>
-                              </div>
-                              
-                              <ul class="weekdays">
-                                <li>Mo</li>
-                                <li>Tu</li>
-                                <li>We</li>
-                                <li>Th</li>
-                                <li>Fr</li>
-                                <li>Sa</li>
-                                <li>Su</li>
+                              <ul>
+                                <li class="prev">&#10094;</li>
+                                <li class="next">&#10095;</li>
+                                <li>
+                                  {{ .Calendar.Month}}<br>
+                                  <span style="font-size:18px">{{ .Calendar.Year}}</span>
+                                </li>
                               </ul>
-                              
-                              <ul class="days">  
-
-                                {{ $day := .Calendar.Day}}
-                                {{range .Calendar.Days}}
-                                {{if eq $day .}}
-                                    <li><span class="active">{{.}}</span></li>
-                                    {{else}}
-                                        <li>{{.}}</li>
-                                    {{end}}
-                                {{end}}
-                                
-                              </ul>
+                            </div>
+                            
+                            <ul class="weekdays">
+                              <li>Mo</li><li>Tu</li><li>We</li><li>Th</li><li>Fr</li><li>Sa</li><li>Su</li>
+                            </ul>
+                            
+                            <ul class="days">  
+                              {{ $day := .Calendar.Day}}{{range .Calendar.Days}}{{if eq $day .}}
+                                  <li><span class="active">{{.}}</span></li>
+                                  {{else}}
+                                      <li>{{.}}</li>
+                                  {{end}}
+                              {{end}}
+                            </ul>
+                          </div>
                         </div>
+                        <!---->
                     </div>
-
-                {{end}}
-            {{end}}
-        </section>
-    
+                    <div class="blog text">
+                      <div class="title">Description</div>
+                      <p>{{ .Description}}</p>
+                    </div>
+                    <div class="help text">
+                      <div class="title">Description</div>
+                      <p>{{ .Description}}</p>
+                    </div>
+                    <div class="code text">
+                      <div class="title">Description</div>
+                      <p>{{ .Description}}</p>
+                    </div>
+                    <div class="about text">
+                      <div class="title">About Content</div>
+                      <p>{{ .Description}}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+          {{end}}
+        {{end}}
+      </section>
     </div>
     <div class="said-footer"></div>
 </body>
