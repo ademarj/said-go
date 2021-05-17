@@ -5,22 +5,21 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>South Africa ID</title>
-    <script src="static/js/said.js" defer></script>
-    <link rel="stylesheet" href="static/css/normalize.css">
-    <link rel="stylesheet" href="static/css/reset.css">
-    <link rel="stylesheet" href="static/css/search.css">
-    <link rel="stylesheet" href="static/css/holiday/item.css">
-    <link rel="stylesheet" href="static/css/calendar.css">
-    <link rel="stylesheet" href="static/css/holiday/detail.css">
-    <link rel="stylesheet" href="static/css/said-menu.css">
-    <link rel="stylesheet" href="static/css/said-app.css">
+    <script src="web/src/js/said.js" defer></script>
+    <link rel="stylesheet" href="web/src/css/normalize.css">
+    <link rel="stylesheet" href="web/src/css/reset.css">
+    <link rel="stylesheet" href="web/src/css/search.css">
+    <link rel="stylesheet" href="web/src/css/holiday/list.css">
+    <link rel="stylesheet" href="web/src/css/calendar.css">
+    <link rel="stylesheet" href="web/src/css/holiday/detail.css">
+    <link rel="stylesheet" href="web/src/css/said-menu.css">
+    <link rel="stylesheet" href="web/src/css/said-app.css">
     <!-- Fontawesome CDN Link -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"/>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body class="said-app">
     <header class="said-header">
-      
     </header>
     <main class="said-container">
       <div class="said-container-item">
@@ -36,7 +35,7 @@
       <section class="holidays">
         {{ $length := len .Holidays }} {{ if gt $length 0 }}
           {{range .Holidays}}
-              <div class="container holidays__main_center box">
+              <div class="container holidays__main-1 box">
                 <div class="topic">{{ .Name}}</div>
                 <div class="content">
                   <input type="radio" name="slider" data-id={{``}}a{{.Id}}{{``}} checked id="home">
@@ -115,11 +114,7 @@
                   </div>
                 </div>
               </div>
-            {{end}}
-          {{else}}
-            <div id="said-message-error" class="said-message-error container holidays__main_center box">
-                <div class="topic"><p>Sorry! No holidays for this time.</p></div>
-            </div>
+          {{end}}
         {{end}}
       </section>
     </main>

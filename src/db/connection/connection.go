@@ -3,7 +3,7 @@ package main
 import (
 	"database/sql"
 
-	"github.com/ademarj/said-go/db"
+	"github.com/ademarj/said-go/src/db"
 	_ "github.com/go-sql-driver/mysql"
 )
 

@@ -3,13 +3,13 @@ package controller
 import (
 	"fmt"
 
-	"github.com/ademarj/said-go/db/dao"
-	"github.com/ademarj/said-go/db/model"
-	"github.com/ademarj/said-go/helper"
-	"github.com/ademarj/said-go/http/api"
-	"github.com/ademarj/said-go/said"
-	"github.com/ademarj/said-go/util/security"
-	"github.com/ademarj/said-go/view"
+	"github.com/ademarj/said-go/src/db/dao"
+	"github.com/ademarj/said-go/src/db/model"
+	"github.com/ademarj/said-go/src/helper"
+	"github.com/ademarj/said-go/src/http/api"
+	"github.com/ademarj/said-go/src/said"
+	"github.com/ademarj/said-go/src/util/security"
+	"github.com/ademarj/said-go/src/view"
 	"github.com/agrison/go-commons-lang/stringUtils"
 	"github.com/tidwall/gjson"
 )

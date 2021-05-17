@@ -1,8 +1,8 @@
 package dao
 
 import (
-	"github.com/ademarj/said-go/db"
-	"github.com/ademarj/said-go/db/model"
+	"github.com/ademarj/said-go/src/db"
+	"github.com/ademarj/said-go/src/db/model"
 	_ "github.com/go-sql-driver/mysql"
 )
 

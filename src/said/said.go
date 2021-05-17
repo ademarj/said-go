@@ -5,8 +5,8 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/ademarj/said-go/db/model"
-	"github.com/ademarj/said-go/helper"
+	"github.com/ademarj/said-go/src/db/model"
+	"github.com/ademarj/said-go/src/helper"
 	"github.com/agrison/go-commons-lang/stringUtils"
 )
 

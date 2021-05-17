@@ -4,7 +4,7 @@ import (
 	"database/sql"
 	"fmt"
 
-	"github.com/ademarj/said-go/util/security"
+	"github.com/ademarj/said-go/src/util/security"
 	_ "github.com/go-sql-driver/mysql"
 )
 

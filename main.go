@@ -4,16 +4,16 @@ import (
 	"html/template"
 	"net/http"
 
-	"github.com/ademarj/said-go/controller"
+	"github.com/ademarj/said-go/src/controller"
 	"github.com/gorilla/mux"
 )
 
 const (
-	INDEX_PAGE        = "public/index.html"
-	HOLIDAY_PAGE      = "public/holiday.html"
-	HOLIDAYS_PAGE     = "public/holidays.html"
+	INDEX_PAGE        = "web/page/index.html"
+	HOLIDAY_PAGE      = "web/page/holiday.html"
+	HOLIDAYS_PAGE     = "web/page/holidays.html"
 	ROOT_PATH         = "/"
-	RESOURCE_DIR      = "/static/"
+	RESOURCE_DIR      = "/web/src/"
 	REQUEST_NUMBER_ID = "southAfricaNumberId"
 	HOLIDAY_ACTION    = "/holiday"
 	HTTP_PORT         = ":9000"

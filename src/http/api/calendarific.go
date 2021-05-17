@@ -6,10 +6,10 @@ import (
 	"io/ioutil"
 	"net/http"
 
-	"github.com/ademarj/said-go/helper"
-	jmodel "github.com/ademarj/said-go/http/json"
-	"github.com/ademarj/said-go/said"
-	"github.com/ademarj/said-go/util/security"
+	"github.com/ademarj/said-go/src/helper"
+	jmodel "github.com/ademarj/said-go/src/http/json"
+	"github.com/ademarj/said-go/src/said"
+	"github.com/ademarj/said-go/src/util/security"
 	"github.com/agrison/go-commons-lang/stringUtils"
 	"github.com/tidwall/gjson"
 )
