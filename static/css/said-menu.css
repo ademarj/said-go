@@ -1,10 +1,10 @@
 .said-menu__link {
-  color: #333333;
-  padding: .5rem 1rem;
-  align-items: center;
+  color: #333333 !important;
+  padding: .5rem 1rem !important;
+  align-items: center !important;
 }
 
 .said-menu__link:hover, .said-menu__link.ative{
-  border-bottom: 2px solid ;
+  border-bottom: 2px solid;
   border-bottom-color: #c92432;
 }

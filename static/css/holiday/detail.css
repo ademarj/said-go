@@ -7,7 +7,7 @@
 }
 .container{
   max-width: 950px;
-  max-height: 98%;
+  max-height: calc(100vh - 110px);
   width: 98%;
   height: 98%;
   padding: 40px 50px  40px  40px;
