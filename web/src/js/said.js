@@ -3,12 +3,15 @@ const form = document.getElementById('form')
 const subButton = document.getElementById('sub');
 subButton.disabled=true;
 
+const searchElement = document.getElementById('said-card__search')
+
 const SA_CITIZEN = 0;
 const PERMANENT_RESIDENT = 1;
 const ERROR_MESSAGE = 'ID Number Invalid'
 
 saNumberId.addEventListener('input', ()=>{
     saNumberId.parentElement.removeAttribute('data-error')
+    searchElement.classList.remove("error")
 })
 
 saNumberId.addEventListener('focus', ()=>{
@@ -19,6 +22,7 @@ saNumberId.addEventListener('focus', ()=>{
 form.addEventListener('submit', ()=>{
     subButton.disabled = true;
     subButton.classList.remove("said-card-success");
+    searchElement.classList.remove("success")
 })
 
 function setInputFilter(textbox, inputFilter) {
@@ -38,14 +42,18 @@ function setInputFilter(textbox, inputFilter) {
         if(this.value.length === 13){
             if(!checksumDig(this.value)){
                 subButton.classList.remove("said-card-success");
+                searchElement.classList.remove("success")
                 subButton.disabled = true;
                 saNumberId.parentElement.setAttribute('data-error',ERROR_MESSAGE);
+                searchElement.classList.add("error")
                 return;
             }
             subButton.classList.add("said-card-success");
+            searchElement.classList.add("success")
             return subButton.disabled = false;
         }
         subButton.classList.remove("said-card-success");
+        searchElement.classList.remove("success")
         subButton.disabled = true;
         
       });
