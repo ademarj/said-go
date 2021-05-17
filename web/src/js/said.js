@@ -1,6 +1,3 @@
-
-//TODO refactoring
-
 const SA_CITIZEN                        = 0;
 const PERMANENT_RESIDENT                = 1;
 
@@ -20,6 +17,26 @@ const searchElement                     = document.getElementById('said-card__se
 
 subButton.disabled=true;
 
+function addMessageError(el){
+    const searchInput =  el.parentElement
+    const small = searchInput.querySelector('small');
+    small.innerText = ERROR_MESSAGE_CLIENT_SIDE
+    
+    el.classList.add(ERROR_MESSAGE)
+}
+
+function removeMessageError(el){
+    el.classList.remove(ERROR_MESSAGE)
+}
+
+function addMessageSuccess(el){
+    el.classList.add(SUCCESS_MESSAGE)
+}
+
+function removeMessageSuccess(el){
+    el.classList.remove(SUCCESS_MESSAGE)
+}
+
 idNumber.addEventListener('input', ()=>{
     idNumber.parentElement.removeAttribute(ATTRIBUTE_DATA_ERROR)
     searchElement.classList.remove(ERROR_MESSAGE)
@@ -33,12 +50,10 @@ idNumber.addEventListener('focus', ()=>{
 form.addEventListener('submit', ()=>{
     subButton.disabled = true;
     subButton.classList.remove(SUCCESS_MESSAGE_FROM_SERVER_SIDE);
-    searchElement.classList.remove(SUCCESS_MESSAGE)
+    removeMessageSuccess(searchElement)
 })
 
-function setMessageError(el, errorMessage){
-    
-}
+//TODO continue refactoring from here
 
 function setInputFilter(textbox, inputFilter) {
     ["input", "keydown", "keyup", "mousedown", "mouseup", "select", "contextmenu", "drop"].forEach(function(event) {
@@ -57,10 +72,10 @@ function setInputFilter(textbox, inputFilter) {
         if(this.value.length === 13){
             if(!checksumDig(this.value)){
                 subButton.classList.remove(SUCCESS_MESSAGE_FROM_SERVER_SIDE);
-                searchElement.classList.remove(SUCCESS_MESSAGE)
+                removeMessageSuccess(searchElement)
                 subButton.disabled = true;
                 idNumber.parentElement.setAttribute(ATTRIBUTE_DATA_ERROR,ERROR_MESSAGE_CLIENT_SIDE);
-                searchElement.classList.add(ERROR_MESSAGE)
+                addMessageError(searchElement)
                 return;
             }
             subButton.classList.add(SUCCESS_MESSAGE_FROM_SERVER_SIDE);
@@ -68,7 +83,7 @@ function setInputFilter(textbox, inputFilter) {
             return subButton.disabled = false;
         }
         subButton.classList.remove(SUCCESS_MESSAGE_FROM_SERVER_SIDE);
-        searchElement.classList.remove(SUCCESS_MESSAGE)
+        removeMessageSuccess(searchElement)
         subButton.disabled = true;
         
       });

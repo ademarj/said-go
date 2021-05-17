@@ -69,6 +69,11 @@
     left: 0;
 }
 
+.said-card__input.error small{
+    visibility: visible;
+    color: #c92432;
+}
+
 .said-card__input.success input {
     border-color: #6d50e2;
     border: 2px solid #6d50e2;
