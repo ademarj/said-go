@@ -13,12 +13,24 @@
     <link rel="stylesheet" href="static/css/holiday/list.css">
     <link rel="stylesheet" href="static/css/calendar.css">
     <link rel="stylesheet" href="static/css/holiday/detail.css">
+    <link rel="stylesheet" href="static/css/said-menu.css">
     <!-- Fontawesome CDN Link -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"/>
 </head>
 <body class="said-app">
-    <div class="said-header"></div>
-    <div class="said-container">
+    <header class="said-header">
+      <nav class="said-menu">
+        <ul class="said-menu__list">
+            <li class="said-menu__item">
+                <a class="said-menu__link ative" href="#">
+                    <i class="fas fa-home"></i>
+                    Home
+                </a>
+            </li>
+        </ul>
+      </nav>
+    </header>
+    <main class="said-container">
       <div class="said-container-item">
           <div class="said-card-search">
               <form id="form" method="post" autocomplete="off" action="/holiday">
@@ -114,7 +126,7 @@
           {{end}}
         {{end}}
       </section>
-    </div>
+    </main>
     <div class="said-footer"></div>
 </body>
 </html>

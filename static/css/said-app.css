@@ -11,8 +11,12 @@
 }
 
 .said-header {
-  grid-area: header;
+  align-items: center;
+  display: flex;
+  grid-area: said-header;
+  padding: 0 2rem;
 }
+
 .said-container {
   grid-area: container;
 }
