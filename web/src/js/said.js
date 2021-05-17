@@ -1,29 +1,44 @@
-const saNumberId = document.getElementById('southAfricaNumberId')
-const form = document.getElementById('form')
-const subButton = document.getElementById('sub');
+
+//TODO refactoring
+
+const SA_CITIZEN                        = 0;
+const PERMANENT_RESIDENT                = 1;
+
+const ATTRIBUTE_DATA_ERROR              = 'data-error'
+
+const ERROR_MESSAGE                     = 'error'
+const ERROR_MESSAGE_CLIENT_SIDE         = 'ID Number Invalid'
+const ERROR_MESSAGE_FROM_SERVER_SIDE    = 'said-message-error'
+
+const SUCCESS_MESSAGE_FROM_SERVER_SIDE  = 'said-card-success'
+const SUCCESS_MESSAGE                   = 'success'
+
+const idNumber                          = document.getElementById('southAfricaNumberId')
+const form                              = document.getElementById('form')
+const subButton                         = document.getElementById('sub');
+const searchElement                     = document.getElementById('said-card__search')
+
 subButton.disabled=true;
 
-const searchElement = document.getElementById('said-card__search')
-
-const SA_CITIZEN = 0;
-const PERMANENT_RESIDENT = 1;
-const ERROR_MESSAGE = 'ID Number Invalid'
-
-saNumberId.addEventListener('input', ()=>{
-    saNumberId.parentElement.removeAttribute('data-error')
-    searchElement.classList.remove("error")
+idNumber.addEventListener('input', ()=>{
+    idNumber.parentElement.removeAttribute(ATTRIBUTE_DATA_ERROR)
+    searchElement.classList.remove(ERROR_MESSAGE)
 })
 
-saNumberId.addEventListener('focus', ()=>{
-    if (document.getElementById('said-message-error') != null)
-    document.getElementById('said-message-error').remove()
+idNumber.addEventListener('focus', ()=>{
+    if (document.getElementById(ERROR_MESSAGE_FROM_SERVER_SIDE) != null)
+        document.getElementById(ERROR_MESSAGE_FROM_SERVER_SIDE).remove()
 })
 
 form.addEventListener('submit', ()=>{
     subButton.disabled = true;
-    subButton.classList.remove("said-card-success");
-    searchElement.classList.remove("success")
+    subButton.classList.remove(SUCCESS_MESSAGE_FROM_SERVER_SIDE);
+    searchElement.classList.remove(SUCCESS_MESSAGE)
 })
+
+function setMessageError(el, errorMessage){
+    
+}
 
 function setInputFilter(textbox, inputFilter) {
     ["input", "keydown", "keyup", "mousedown", "mouseup", "select", "contextmenu", "drop"].forEach(function(event) {
@@ -41,26 +56,26 @@ function setInputFilter(textbox, inputFilter) {
 
         if(this.value.length === 13){
             if(!checksumDig(this.value)){
-                subButton.classList.remove("said-card-success");
-                searchElement.classList.remove("success")
+                subButton.classList.remove(SUCCESS_MESSAGE_FROM_SERVER_SIDE);
+                searchElement.classList.remove(SUCCESS_MESSAGE)
                 subButton.disabled = true;
-                saNumberId.parentElement.setAttribute('data-error',ERROR_MESSAGE);
-                searchElement.classList.add("error")
+                idNumber.parentElement.setAttribute(ATTRIBUTE_DATA_ERROR,ERROR_MESSAGE_CLIENT_SIDE);
+                searchElement.classList.add(ERROR_MESSAGE)
                 return;
             }
-            subButton.classList.add("said-card-success");
-            searchElement.classList.add("success")
+            subButton.classList.add(SUCCESS_MESSAGE_FROM_SERVER_SIDE);
+            searchElement.classList.add(SUCCESS_MESSAGE)
             return subButton.disabled = false;
         }
-        subButton.classList.remove("said-card-success");
-        searchElement.classList.remove("success")
+        subButton.classList.remove(SUCCESS_MESSAGE_FROM_SERVER_SIDE);
+        searchElement.classList.remove(SUCCESS_MESSAGE)
         subButton.disabled = true;
         
       });
     });
 }
   
-setInputFilter(saNumberId, function(value) {return /^-?\d*$/.test(value); });
+setInputFilter(idNumber, function(value) {return /^-?\d*$/.test(value); });
 
 function checksumDig(southAfricaId){
     let dateOfBirth = southAfricaId.substring(0,6)
