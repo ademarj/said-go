@@ -25,10 +25,22 @@
       <div class="said-container-item">
           <div class="said-card-search">
               <form id="form" method="post" autocomplete="off" action="/holiday">
-                  <div class="said-card">
-                      <input type="text" class="input" tooltip="Find holidays by your South African Number Id" placeholder="ID Number" maxlength="13" id="southAfricaNumberId" name="southAfricaNumberId" />
-                      <input type="submit" id="sub" value="Search"/>
+                <div class="said-card">
+                  <div class="said-card__input error">
+                      <label>South African ID Number</label>
+                      <input type="text" class="input" placeholder=" ID Number" maxlength="13" id="southAfricaNumberId" name="southAfricaNumberId" />
+                      <i class="fa fa-check-circle"></i>
+                      <i class="fa fa-exclamation-circle"></i>
+                      <small>Error message</small>
                   </div>
+                  <div class="said-card__submit success">
+                      <label>South</label>
+                      <input type="submit" id="sub" value="Search"/>
+                      <i class="fa fa-check-circle"></i>
+                      <i class="fa fa-exclamation-circle"></i>
+                      <small>Error message</small>
+                  </div>
+                </div>
               </form>
           </div>
       </div>

@@ -1,52 +1,99 @@
 .said-card-search{
     width: 100%;
+
+}
+
+.form{
+    padding: 30px 40px;
 }
 
 .said-card{
-    /* float: left; */
     width:30%;
     height:40px;
-    border: 1px solid #CCC;
+    border: none;
+    margin: auto;
+    padding-bottom: 20px;
+    margin-bottom: 10px;
+    position: relative;
+}
+
+.said-card__input{
+    float: left;
+    position: relative;
+    width:70%;
+    height:40px;
+    border: none;
     border-radius: 5px;
     margin: auto;
 }
 
-.said-card input[type='text']{
-    float: left;
-    width: 70%;
+.said-card__submit{
+    float: right;
+    width: 30%;
+    height:40px;
+    border:none;
+}
+
+.said-card__submit input{
+    width: 100%;
+    height: 100%;
+    border:none;
+    background: #CCC;
+} 
+
+.said-card__input input{
+    width: 100%;
     height: 100%;
     border:none;
     outline: none;
     background: transparent;
-    padding: 0 5px;
 }
 
-.said-card input[type='submit']{
-    float: left;
-    width: 30%;
-    height: 100%;
-    border:none;
-    background: #CCC;
+.said-card label {
+    visibility: hidden;
+    display: inline-block;
+    margin-bottom: 5px;
 }
 
-.said-card[data-error] .input{
+.said-card i {
+    /* visibility: hidden; */
+    position: absolute;
+    top: 34px;
+    right: 16px;
+}
+
+.said-card small{
+    visibility: hidden;
+    bottom: 0;
+    left: 0;
+}
+
+.said-card__input.success input {
+    border-color: #2ecc71;
+    border: 2px solid #2ecc71;
+    border-radius: 5px;
+}
+
+.said-card__submit.success input {
+    border-color: #2ecc71;
+    border: 2px solid #2ecc71;
+    border-radius: 5px;
+}
+
+.said-card__input.error input {
     border-color: #c92432;
-    color: #c92432;
-    border: 1px solid #c92432;
-    outline: none;
-    /* background: #fffafa; */
+    border: 2px solid #c92432;
+    border-radius: 5px;
+}
+
+.said-card__submit.error input {
+    border-color: #c92432;
+    border: 2px solid #c92432;
+    border-radius: 5px;
 }
 
 .said-card-success{
     color: #fff;
     background: #6d50e2 !important;
     border-radius: 4px;
-}
-
-.said-card[data-error]::after{
-    content: attr(data-error);
-    font-size: 0.85em;
-    color: #c92432;
-    display: block;
-    margin:10px 0;
 }
