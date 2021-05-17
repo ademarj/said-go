@@ -11,6 +11,11 @@ saNumberId.addEventListener('input', ()=>{
     saNumberId.parentElement.removeAttribute('data-error')
 })
 
+saNumberId.addEventListener('focus', ()=>{
+    if (document.getElementById('said-message-error') != null)
+    document.getElementById('said-message-error').remove()
+})
+
 form.addEventListener('submit', ()=>{
     subButton.disabled = true;
     subButton.classList.remove("said-card-success");
