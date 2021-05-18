@@ -28,7 +28,7 @@ const (
 	ALL_HOLIDAYS_CURRENT_YEAR = false
 	URL_SERVICE               = "URL_CALENDARIFIC_REST_API"
 	API_KEY                   = "API_KEY_CALENDARIFIC_REST_API"
-	COUNTRY                   = "US"
+	COUNTRY                   = "ZA"
 	SUCCESS                   = "success"
 	ERROR_RESULT              = "{success: false}"
 	URL_API_COUNTRY           = "%s&api_key=%s&country=%s"
